@@ -194,7 +194,7 @@ function Import-ADUsers {
     Write-Host " Example: if your Microsoft 365 domain is 'contoso.onmicrosoft.com'," -ForegroundColor Yellow
     Write-Host "   Simply enter 'contoso' below." -ForegroundColor Yellow
     Write-Host ""
-
+    $defaultPassword = Read-host "Enter temporary Password for the new accounts" -AsSecureString
     $Company = Read-Host "Please enter your Microsoft 365 domain name (without .onmicrosoft.com)"
     $userUPNSuffix = "@$Company.onmicrosoft.com"
 
@@ -244,7 +244,7 @@ function Import-ADUsers {
                     Department        = $user.Department
                     Company           = $user.Company
                     Enabled           = $true
-                    AccountPassword   = (ConvertTo-SecureString -AsPlainText "ComplexPassword1234!" -Force)
+                    AccountPassword   = $defaultPassword 
                     PassThru          = $true
                     Path              = $OUPath
                 }
@@ -1020,3 +1020,4 @@ do {
     }
     Pause
 } while ($choice -ne "16")
+
